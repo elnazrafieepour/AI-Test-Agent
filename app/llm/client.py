@@ -5,10 +5,8 @@ from app.config import settings
 
 class LLMClient:
 
-    def __init__(self):
-        self.client = OpenAI(
-            api_key=settings.openai_api_key
-        )
+    def __init__(self, client: OpenAI):
+        self.client = client
 
     def ask(self, prompt: str) -> str:
         response = self.client.responses.create(
