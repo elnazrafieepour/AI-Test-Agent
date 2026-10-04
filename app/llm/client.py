@@ -1,17 +1,11 @@
-from openai import OpenAI
-
 from app.config import settings
+from app.llm.provider import LLMProvider
 
 
 class LLMClient:
 
-    def __init__(self, client: OpenAI):
-        self.client = client
+    def __init__(self, provider: LLMProvider):
+        self.provider = provider
 
     def ask(self, prompt: str) -> str:
-        response = self.client.responses.create(
-            model=settings.openai_model,
-            input=prompt
-        )
-
-        return response.output_text
+        return self.provider.generate(prompt)
