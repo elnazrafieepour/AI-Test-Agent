@@ -6,6 +6,7 @@ from app.models.test_scenario import TestScenario
 
 
 class RequirementAnalysis(BaseModel):
+    requirement_summary: str
     test_scenarios: list[TestScenario]
     risks: list[Risk]
     ambiguities: list[Ambiguity]
