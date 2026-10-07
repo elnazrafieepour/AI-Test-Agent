@@ -1,0 +1,51 @@
+openapi: 3.1.0
+
+info:
+  title: Transfer API
+  version: 1.0.0
+
+servers:
+  - url: https://api.example.com
+
+paths:
+
+  /transfers:
+    post:
+      operationId: createTransfer
+      summary: Create a money transfer
+      description: Creates a transfer between two accounts.
+
+      parameters:
+        - name: X-Request-ID
+          in: header
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+            example:
+              sourceAccount: "10001"
+              destinationAccount: "20002"
+              amount: 1000000
+
+      responses:
+
+        "200":
+          description: Transfer created successfully
+
+        "400":
+          description: Invalid transfer request
+
+        "401":
+          description: Authentication required
+
+        "409":
+          description: Duplicate transfer
+
+        "500":
+          description: Internal server error
