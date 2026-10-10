@@ -43,10 +43,12 @@ class ToolRegistry:
 
     ##help to agent for select a fit tool:
     def discover(self) -> list[ToolMetadata]:
+
         return [
             ToolMetadata(
                 name=tool.name,
                 description=tool.description,
+                input_schema=tool.input_schema(),
             )
             for tool in self._tools.values()
         ]
