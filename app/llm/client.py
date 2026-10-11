@@ -1,8 +1,12 @@
-from typing import TypeVar
+
+from typing import Any, TypeVar
 
 from pydantic import BaseModel
 
-from app.llm.provider import LLMProvider
+from app.llm.provider import (
+    LLMProvider,
+    ToolExecutorProtocol,
+)
 
 
 T = TypeVar("T", bound=BaseModel)
@@ -24,4 +28,16 @@ class LLMClient:
         return self.provider.generate_structured(
             prompt,
             response_model,
+        )
+
+    def ask_with_tools(
+        self,
+        prompt: str,
+        tools: list[dict[str, Any]],
+        executor: ToolExecutorProtocol,
+    ) -> str:
+        return self.provider.generate_with_tools(
+            prompt=prompt,
+            tools=tools,
+            executor=executor,
         )
