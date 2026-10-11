@@ -13,16 +13,21 @@ FIXTURE = Path(
 )
 
 
+
 def test_executor_runs_registered_tool():
     registry = ToolRegistry()
     registry.register(OpenAPITool())
     executor = ToolExecutor(registry)
+
     result = executor.execute(
         "openapi_parser",
-        FIXTURE,
+        {
+            "file_path": str(FIXTURE)
+        },
     )
-    assert isinstance(result, OpenAPISpec)
+
     assert result.title == "Transfer API"
+    assert isinstance(result, OpenAPISpec)
     assert len(result.endpoints) == 1
 
 

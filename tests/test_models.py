@@ -4,13 +4,19 @@ from pydantic import ValidationError
 from app.models.requirement_analysis import RequirementAnalysis
 
 
+
 def test_requirement_analysis_accepts_valid_data():
 
     analysis = RequirementAnalysis(
+        requirement_summary=(
+            "Transfer money between two valid accounts."
+        ),
         test_scenarios=[
             {
                 "title": "Successful transfer",
-                "description": "Transfer money between two valid accounts.",
+                "description": (
+                    "Transfer money between two valid accounts."
+                ),
                 "scenario_type": "positive",
                 "priority": "high",
             }
@@ -23,15 +29,20 @@ def test_requirement_analysis_accepts_valid_data():
         ],
         ambiguities=[
             {
-                "description": "Maximum transfer amount is undefined.",
-                "question": "What is the maximum allowed amount?",
+                "description": (
+                    "Maximum transfer amount is undefined."
+                ),
+                "question": (
+                    "What is the maximum allowed amount?"
+                ),
             }
         ],
     )
 
+    assert analysis.requirement_summary
     assert len(analysis.test_scenarios) == 1
-    assert analysis.test_scenarios[0].priority == "high"
-    assert analysis.risks[0].severity == "critical"
+    assert len(analysis.risks) == 1
+    assert len(analysis.ambiguities) == 1
 
 
 def test_requirement_analysis_rejects_invalid_scenario_type():

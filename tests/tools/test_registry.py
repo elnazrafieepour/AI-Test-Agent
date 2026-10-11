@@ -55,7 +55,9 @@ def test_execute_tool():
     )
     result = registry.execute(
         "openapi_parser",
-        "tests/fixtures/openapi/transfer_api.yaml",
+         {
+        "file_path": "tests/fixtures/openapi/transfer_api.yaml"
+    },
     )
     assert result.title == "Transfer API"
     assert len(result.endpoints) == 1
